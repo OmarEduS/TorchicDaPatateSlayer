@@ -10,7 +10,6 @@ from connection import Message
 from tcp import TcpClient
 from update import Agent
 
-
 def connect(client: TcpClient):
     client.write("connect " + base64.b64encode(bytes(env.ID, 'utf-8')).decode('utf-8'))
 

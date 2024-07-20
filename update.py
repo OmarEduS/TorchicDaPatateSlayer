@@ -3,10 +3,25 @@ from typing import List
 from actions import Action, create_build_barricade_action, create_build_factory_action, create_move_action
 from server import Game
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 class Agent:
     def __init__(self):
         pass
+    
+    def pr(mess: str):
+        print(f"{bcolors.FAIL}-----------------------------------------------{bcolors.ENDC}")
+        print(f"{bcolors.OKCYAN}TEST:: {mess}{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}-----------------------------------------------{bcolors.ENDC}")
 
     def update(self, game: Game) -> List[Action]:
         player_name = 'TorchicDaPatateSlayer'
@@ -23,7 +38,7 @@ class Agent:
             
             for pipe in pipes: 
                 # si le premier path est à nous, mais pas le deuxieme et on a au moins 1 soldat
-                if pipe.first() in player_terrains_index and pipe.first().type == 2:
+                if pipe.first() in player_terrains_index and terrains[pipe.first()].type == 2:
                     #si on a un espace vide et pas beaucoup de soldats, on build une factory
                     if terrains[pipe.first()].number_of_soldier() < 5:
                         orders.append(create_build_factory_action(terrains[pipe.first()].id()))
@@ -31,13 +46,13 @@ class Agent:
                     else:
                         orders.append(create_build_barricade_action(terrains[pipe.first()].id()))
                         
-                if pipe.second() not in player_terrains_index and terrains[pipe.first()].number_of_soldier() > 5:
+                if pipe.second() not in player_terrains_index and terrains[pipe.first()].number_of_soldier() > 1:
                         # on bouge des soldat du premier au deuxieme path
-                        orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 2))
+                        orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1 ))
                         # si le deuxieme et le premier path ne sont pas à nous
-                        if pipe.second() in player_terrains_index and pipe.first() not in player_terrains_index and terrains[pipe.second()].number_of_soldier() > 0:
+                if pipe.second() in player_terrains_index and pipe.first() not in player_terrains_index and terrains[pipe.second()].number_of_soldier() > 0:
                             # on ramene le soldat
-                            orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.first()].id(), 2))
+                            orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.first()].id(), 1))
 
             return orders
         return []
