@@ -38,7 +38,7 @@ class Agent:
             
             for pipe in pipes: 
                 # si le premier path est à nous, mais pas le deuxieme et on a au moins 1 soldat
-                if pipe.first() in player_terrains_index and terrains[pipe.first()].type == 2:
+                if pipe.first() in player_terrains_index:
                     orders.append(create_build_factory_action(terrains[pipe.first()].id()))
                     print("FACTORY")
                         
@@ -55,6 +55,9 @@ class Agent:
                 if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 or terrains[pipe.second()].type != 3) and terrains[pipe.first()].number_of_soldier() > 0:
                     orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1))
                     print("-")
+                if pipe.first() in player_terrains_index:
+                    orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
+                    print("barricade")
                 
             return orders
         return []
