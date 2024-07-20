@@ -52,7 +52,7 @@ class Agent:
                 #    orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
                 #    print("DEMOLISH")
                     
-                if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 or terrains[pipe.second()].type != 3) and terrains[pipe.first()].number_of_soldier() > 0:
+                if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 and terrains[pipe.second()].type != 3) and terrains[pipe.first()].number_of_soldier() > 0:
                     orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1))
                     print("-")
                 if pipe.second() in player_terrains_index:
