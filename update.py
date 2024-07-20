@@ -55,7 +55,7 @@ class Agent:
                 if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 or terrains[pipe.second()].type != 3) and terrains[pipe.first()].number_of_soldier() > 0:
                     orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1))
                     print("-")
-                if pipe.first() in player_terrains_index:
+                if pipe.second() in player_terrains_index:
                     orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
                     print("barricade")
                 
