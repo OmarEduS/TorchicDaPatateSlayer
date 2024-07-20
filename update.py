@@ -46,13 +46,13 @@ class Agent:
                     else:
                         orders.append(create_build_barricade_action(terrains[pipe.first()].id()))
                         
-                if pipe.second() not in player_terrains_index and terrains[pipe.first()].number_of_soldier() > 1:
+                if pipe.second() not in player_terrains_index and terrains[pipe.first()].number_of_soldier() > 2*terrains[pipe.second()].number_of_soldier() + 7:
                         # on bouge des soldat du premier au deuxieme path
-                        orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1 ))
+                        orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 2*terrains[pipe.second()].number_of_soldier() + 7 ))
                         # si le deuxieme et le premier path ne sont pas à nous
-                if pipe.second() in player_terrains_index and pipe.first() not in player_terrains_index and terrains[pipe.second()].number_of_soldier() > 0:
+               # if pipe.second() in player_terrains_index and pipe.first() not in player_terrains_index and terrains[pipe.second()].number_of_soldier() > 0:
                             # on ramene le soldat
-                            orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.first()].id(), 1))
+                            #orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.first()].id(), 1))
 
             return orders
         return []
