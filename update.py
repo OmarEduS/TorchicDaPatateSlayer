@@ -40,20 +40,13 @@ class Agent:
                 # si le premier path est à nous, mais pas le deuxieme et on a au moins 1 soldat
                 if pipe.first() in player_terrains_index and terrains[pipe.first()].type == 2:
                     #si on a un espace vide et pas beaucoup de soldats, on build une factory
-                    if terrains[pipe.first()].number_of_soldier() < 5:
-                        orders.append(create_build_factory_action(terrains[pipe.first()].id()))
+                    orders.append(create_build_factory_action(terrains[pipe.first()].id()))
                     # sinon, si c'Est un espace vide et qu'on a beaucoup de sodlats, on build une barriere
-                    else:
-                        orders.append(create_build_barricade_action(terrains[pipe.first()].id()))
                         
-                if pipe.second() not in player_terrains_index and terrains[pipe.first()].number_of_soldier() > 2*terrains[pipe.second()].number_of_soldier() + 7:
+                if pipe.second() not in player_terrains_index and terrains[pipe.second()].type != 0:
                         # on bouge des soldat du premier au deuxieme path
-                        orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 2*terrains[pipe.second()].number_of_soldier() + 7 ))
+                    orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.second()].id(), 1 ))
                         # si le deuxieme et le premier path ne sont pas à nous
-               # if pipe.second() in player_terrains_index and pipe.first() not in player_terrains_index and terrains[pipe.second()].number_of_soldier() > 0:
-                            # on ramene le soldat
-                            #orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.first()].id(), 1))
-
             return orders
         return []
     
