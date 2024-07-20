@@ -9,7 +9,7 @@ class Agent:
         pass
 
     def update(self, game: Game) -> List[Action]:
-        player_name = 'TorchicDaBOTSlayer'
+        player_name = 'TorchicDaPatateSlayer'
         terrains = game.terrains()
         players = game.players()
         pipes = game.pipes()
