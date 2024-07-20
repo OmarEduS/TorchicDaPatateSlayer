@@ -38,26 +38,25 @@ class Agent:
             
             for pipe in pipes: 
                 # si le premier path est à nous, mais pas le deuxieme et on a au moins 1 soldat
-                if pipe.first() in player_terrains_index:
+                if terrains[pipe.first()].id in player_terrains_index and terrains[pipe.first()].type == 2:
                     orders.append(create_build_factory_action(terrains[pipe.first()].id()))
                     print("FACTORY")
                         
-                #if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 or terrains[pipe.second()].type != 3):
-                 #   orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1 ))
-                  #  print("1 to 2")
-                        # si le deuxieme et le premier path ne sont pas à nous
-                #if terrains[pipe.first()].number_of_soldier() > terrains[pipe.second()].number_of_soldier()*2 + 6:
-                #    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), terrains[pipe.first()].number_of_soldier()))
-                #    orders.append(create_demolish_action(terrains[pipe.second()].id()))
-                #    orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
-                #    print("DEMOLISH")
-                    
-                if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 and terrains[pipe.second()].type != 3) and terrains[pipe.first()].number_of_soldier() > 0:
-                    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1))
+                if terrains[pipe.second()].id not in player_terrains_index and (terrains[pipe.second()].type != 0 or terrains[pipe.second()].type != 3):
+                    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), terrains[pipe.first()].number_of_soldier() ))
                     print("-")
-                if pipe.second() in player_terrains_index:
-                    orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
-                    print("barricade")
+                elif terrains[pipe.first()].number_of_soldier() > terrains[pipe.second()].number_of_soldier()*2 + 6:
+                    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), terrains[pipe.first()].number_of_soldier()))
+                    orders.append(create_demolish_action(terrains[pipe.second()].id()))
+                    orders.append(create_build_factory_action(terrains[pipe.second()].id()))
+                    print("DEMOLISH+ FACT")
+                    
+                #if terrains[pipe.second()].id not in player_terrains_index and (terrains[pipe.second()].type != 0 and terrains[pipe.second()].type != 3) and terrains[pipe.first()].number_of_soldier() > 0:
+                #    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), terrains[pipe.first()].number_of_soldier()))
+                    
+                #if terrains[pipe.second()].id in player_terrains_index:
+                #    orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
+                #    print("barricade")
                 
             return orders
         return []
