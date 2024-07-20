@@ -1,6 +1,6 @@
 from typing import List
 
-from actions import Action, create_build_barricade_action, create_build_factory_action, create_move_action
+from actions import Action, create_build_barricade_action, create_build_factory_action, create_demolish_action, create_move_action
 from server import Game
 
 class bcolors:
@@ -42,11 +42,18 @@ class Agent:
                     #si on a un espace vide et pas beaucoup de soldats, on build une factory
                     orders.append(create_build_factory_action(terrains[pipe.first()].id()))
                     # sinon, si c'Est un espace vide et qu'on a beaucoup de sodlats, on build une barriere
+                #if pipe.first() in player_terrains_index and terrains[pipe.first()].type == 0:
+                #    orders.append(create_build_barricade_action(terrains[pipe.first()].id()))
                         
-                if pipe.second() not in player_terrains_index and terrains[pipe.second()].type != 0:
+                if pipe.second() not in player_terrains_index and (terrains[pipe.second()].type != 0 or terrains[pipe.second()].type != 3):
                         # on bouge des soldat du premier au deuxieme path
                     orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1 ))
                         # si le deuxieme et le premier path ne sont pas à nous
+                elif terrains[pipe.first()].number_of_soldier() > terrains[pipe.second()].number_of_soldier()*2 + 6:
+                    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), terrains[pipe.first()].number_of_soldier()))
+                    orders.append(create_demolish_action(terrains[pipe.second()].id()))
+                    orders.append(create_build_barricade_action(terrains[pipe.second()].id()))
+                
             return orders
         return []
     
