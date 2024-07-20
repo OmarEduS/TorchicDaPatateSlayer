@@ -45,7 +45,7 @@ class Agent:
                         
                 if pipe.second() not in player_terrains_index and terrains[pipe.second()].type != 0:
                         # on bouge des soldat du premier au deuxieme path
-                    orders.append(create_move_action(terrains[pipe.second()].id(), terrains[pipe.second()].id(), 1 ))
+                    orders.append(create_move_action(terrains[pipe.first()].id(), terrains[pipe.second()].id(), 1 ))
                         # si le deuxieme et le premier path ne sont pas à nous
             return orders
         return []
